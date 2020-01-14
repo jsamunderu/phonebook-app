@@ -43,7 +43,7 @@ class ListEntries extends Component {
 
     deleteEntryClicked(phoneNumber) {
         let data = {
-            phoneNumber: values.phoneNumber
+            phoneNumber: phoneNumber
         }
 
         Promise.resolve(EntryDataService.deleteEntry(data))
@@ -63,7 +63,7 @@ class ListEntries extends Component {
     updateEntryClicked(phoneNumber) {
         this.props.history.push(`/entry/${phoneNumber}`)
 
-        console.log(values);
+        console.log(phoneNumber);
     }
 
     render() {

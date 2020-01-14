@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { StyledModal } from "./style";
+import EntryDataService from '../service/EntryDataService';
 
 const modalRoot = document.getElementById("modal-root");
 
@@ -60,7 +61,7 @@ class InputDialog extends React.Component {
             phoneNumber: this.values.phoneNumber
         }
 
-        CourseDataService.retrieveEntry(data)
+        EntryDataService.retrieveEntry(data)
             .then(response => this.setState({
                 phoneNumber: response.data.phoneNumber
             }))
@@ -91,7 +92,7 @@ class InputDialog extends React.Component {
             Promise.resolve(EntryDataService.createEntry(data)).then(() => this.props.history.push('/'));
         } else {
             let data = {
-                oldPhoneNumber: this.state.phoneNumber
+                oldPhoneNumber: this.state.phoneNumber,
                 newName: values.name,
                 newPhoneNumber: values.phoneNumber
             }
@@ -123,7 +124,7 @@ class InputDialog extends React.Component {
                                          className="alert alert-warning" />
                                      <fieldset className="form-group">
                                          <label>Name</label>
-                                         <Field className="form-control" type="text" name="name" disabled />
+                                         <Field className="form-control" type="text" name="name" />
                                      </fieldset>
                                      <fieldset className="form-group">
                                          <label>Phone Number</label>

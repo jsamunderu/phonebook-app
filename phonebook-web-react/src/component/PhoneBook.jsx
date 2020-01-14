@@ -31,7 +31,11 @@ class PhoneBook extends Component {
                     <Switch>
                         <Route path="/" exact component={ListEntries} />
 			<Route
-                            path='/entries/:phoneNumber'
+                            path='/entry'
+                            render={(props) => <InputDialog {...props} show={this.state.showModal} onHide={this.close} />}
+			/>
+			<Route
+                            path='/entry/:phoneNumber'
                             render={(props) => <InputDialog {...props} show={this.state.showModal} onHide={this.close} />}
 			/>
                     </Switch>
