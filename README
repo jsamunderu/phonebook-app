@@ -7,7 +7,7 @@ cd phonebook-backend
 mvn clean package
 java -jar target/
 
-The frontend depends on formik, react-dom, bootstrap and popper.js, jquery, styled-components and axios
+The frontend depends on formik, react-dom, bootstrap and popper.js, jquery, styled-components axios and qs
 
 cd phonebook-web-react
 npm start

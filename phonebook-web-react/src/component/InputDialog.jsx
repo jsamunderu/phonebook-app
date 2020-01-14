@@ -40,29 +40,26 @@ function Modal({ children, toggle, open }) {
 class InputDialog extends React.Component {
     constructor(props) {
         super(props)
-       this.state = { 
-            name: '',
-            phoneNumber: this.props.match.params.phoneNumber
+        this.state = {
+             name: "",
+             phoneNumber: this.props.match.params.phoneNumber
         }
-    }
-
-    componentDidMount = () => {
+        console.log("===========" + JSON.stringify(this.props.match.params))
     }
 
     componentDidMount() {
-
-        console.log(this.state.phoneNumber)
-
         if (!this.state.phoneNumber) {
             return
         }
+        console.log("@@@@@@@@@@@" + this.state.phoneNumber.length)
 
         let data = {
-            name: this.values.phoneNumber
+            name: this.state.phoneNumber
         }
 
         EntryDataService.retrieveEntry(data)
             .then(response => this.setState({
+                name: response.data[0].name,
                 phoneNumber: response.data[0].phoneNumber
             }))
     }
