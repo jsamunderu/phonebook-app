@@ -43,11 +43,17 @@ class Gateway(private val repository: EntryRepository) {
 	}
 
 	@PostMapping("/find")
-	fun find(@RequestBody fromWire: WireSearch) : WireEntry {
+	fun find(@RequestBody fromWire: WireSearch) : MutableList<WireEntry> {
 		println("find")
 		
+		var result = mutableListOf<WireEntry>()
+
 		val entry = repository.findByPhoneNumber(fromWire.name) ?: Entry("", "")
-		val result = WireEntry(entry.name, entry.phoneNumber)
+		val id: Long = entry.id ?: -1
+		if (id != -1L) {
+			result.add(WireEntry(entry.name, entry.phoneNumber))
+		}
+
 		return result
 	}
 
