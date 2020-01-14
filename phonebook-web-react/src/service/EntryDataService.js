@@ -5,23 +5,27 @@ const ADDRBK_API_URL = 'http://localhost:8080/api/addrbk'
 class EntryDataService {
 
     retrieveAllEntries() {
-        return axios.post(`${ADDRBK_API_URL}/`);
+        return axios.get(`${ADDRBK_API_URL}/`);
     }
 
-    retrieveCourse(name) {
-        return axios.post(`${ADDRBK_API_URL}/search`, name);
+    searchEntry(data) {
+        return axios.post(`${ADDRBK_API_URL}/search`, data);
     }
 
-    deleteEntry(name, phoneNumber) {
-        return axios.post(`${ADDRBK_API_URL}/delete`, name, phoneNumber);
+    retrieveEntry(data) {
+        return axios.post(`${ADDRBK_API_URL}/find`, data);
     }
 
-    updateEntry(name, phoneNumber) {
-        return axios.post(`${ADDRBK_API_URL}/update`, name, phoneNumber);
+    deleteEntry(data) {
+        return axios.post(`${ADDRBK_API_URL}/delete`, data);
     }
 
-    createEntry(name, phoneNumber) {
-        return axios.post(`${ADDRBK_API_URL}/`, name, phoneNumber);
+    updateEntry(data) {
+        return axios.post(`${ADDRBK_API_URL}/update`, data);
+    }
+
+    createEntry(data) {
+        return axios.post(`${ADDRBK_API_URL}/`, data);
     }
 }
 

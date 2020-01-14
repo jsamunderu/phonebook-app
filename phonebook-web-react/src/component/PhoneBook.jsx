@@ -30,9 +30,8 @@ class PhoneBook extends Component {
                     <h1>Phone Book</h1>
                     <Switch>
                         <Route path="/" exact component={ListEntries} />
-                        <Route path="/entries" exact component={ListEntries} />
 			<Route
-                            path='/entries/-1'
+                            path='/entries/:phoneNumber'
                             render={(props) => <InputDialog {...props} show={this.state.showModal} onHide={this.close} />}
 			/>
                     </Switch>

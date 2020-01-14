@@ -21,18 +21,32 @@ class ListEntries extends Component {
         this.refreshEntries();
     }
 
+    onSubmit = (values) => {
+        let data = {
+            name: values.name,
+        }
+
+        Promise.resolve(EntryDataService.searchEntry(data)).then(() => this.props.history.push('/'));
+
+        console.log(values);
+    }
+
     refreshEntries() {
         EntryDataService.retrieveAllEntries()
             .then(
                 response => {
                     //console.log(response);
-                    this.setState({ courses: response.data })
+                    this.setState({ entries: response.data })
                 }
             )
     }
 
     deleteEntryClicked(phoneNumber) {
-        EntryDataService.deleteEntry(phoneNumber)
+        let data = {
+            phoneNumber: values.phoneNumber
+        }
+
+        Promise.resolve(EntryDataService.deleteEntry(data))
             .then(
                 response => {
                     this.setState({ message: `Delete of entry ${phoneNumber} Successful` })
@@ -43,25 +57,28 @@ class ListEntries extends Component {
     }
 
     addEntryClicked() {
-        this.props.history.push(`/entries/-1`)
+        this.props.history.push(`/entry`)
     }
 
     updateEntryClicked(phoneNumber) {
-        console.log('update ' + phoneNumber)
-        this.props.history.push(`/entries/${phoneNumber}`)
+        this.props.history.push(`/entry/${phoneNumber}`)
+
+        console.log(values);
     }
 
     render() {
         console.log('render')
         return (
             <div className="container">
-                <h3>All Phone Book Entries</h3>
 
-                <form class="form-inline active-cyan-4">
+                <form class="form-inline active-cyan-4" onSubmit={this.onSubmit}> 
                     <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search"
                         aria-label="Search" />
                     <i class="fas fa-search" aria-hidden="true"></i>
                 </form>
+
+                <h3>All Phone Book Entries</h3>
+
                 {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
                 <div className="container">
                     <table className="table">
@@ -80,8 +97,8 @@ class ListEntries extends Component {
                                         <tr key={entries.name}>
                                             <td>{entries.name}</td>
                                             <td>{entries.phoneNumber}</td>
-                                            <td><button className="btn btn-success" onClick={() => this.updateEntryClicked(entries.id)}>Update</button></td>
-                                            <td><button className="btn btn-warning" onClick={() => this.deleteEntryClicked(entries.id)}>Delete</button></td>
+                                            <td><button className="btn btn-success" onClick={() => this.updateEntryClicked(entries.phoneNumber)}>Update</button></td>
+                                            <td><button className="btn btn-warning" onClick={() => this.deleteEntryClicked(entries.phoneNumber)}>Delete</button></td>
                                         </tr>
                                 )
                             }

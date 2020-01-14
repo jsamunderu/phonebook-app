@@ -39,9 +39,31 @@ function Modal({ children, toggle, open }) {
 class InputDialog extends React.Component {
     constructor(props) {
         super(props)
+       this.state = { 
+            name: '',
+            phoneNumber: this.props.match.params.phoneNumber
+        }
     }
 
     componentDidMount = () => {
+    }
+
+    componentDidMount() {
+
+        console.log(this.state.phoneNumber)
+
+        if (!this.state.phoneNumber) {
+            return
+        }
+
+        let data = {
+            phoneNumber: this.values.phoneNumber
+        }
+
+        CourseDataService.retrieveEntry(data)
+            .then(response => this.setState({
+                phoneNumber: response.data.phoneNumber
+            }))
     }
 
     validate = (values) =>{
@@ -56,28 +78,38 @@ class InputDialog extends React.Component {
     }
 
     onHide = () => {
-        Promise.resolve(this.props.onHide()).then(() => this.props.history.push('/entries'));
+        Promise.resolve(this.props.onHide()).then(() => this.props.history.push('/'));
     }
 
     onSubmit = (values) => {
-       //let username = INSTRUCTOR
+        if (!this.state.phoneNumber) {
+            let data = {
+                name: values.name,
+                phoneNumber: values.phoneNumber
+            }
 
-       // if (this.state.id === -1) {
-            //CourseDataService.createCourse(username, course)
-            //    .then(() => this.props.history.push('/courses'))
-        //} else {
-            //CourseDataService.updateCourse(username, this.state.id, course)
-            //    .then(() => this.props.history.push('/courses'))
-        //}
+            Promise.resolve(EntryDataService.createEntry(data)).then(() => this.props.history.push('/'));
+        } else {
+            let data = {
+                oldPhoneNumber: this.state.phoneNumber
+                newName: values.name,
+                newPhoneNumber: values.phoneNumber
+            }
+
+            Promise.resolve(EntryDataService.updateEntry(data)).then(() => this.props.history.push('/'));
+        }
 
         console.log(values);
     }
 
     render() {
+        let { name, phoneNumber } = this.state
+
         return (
             <div className="InputDialog">
                 <Modal open={this.props.show} toggle={this.onHide}>
                      <Formik
+                        initialValues={{ name, phoneNumber }}
                         onSubmit={this.onSubmit}
                         validateOnChange={false}
                         validateOnBlur={false}
