@@ -8,6 +8,7 @@ import kotlin.collections.MutableList
 import java.io.IOException
 import org.springframework.http.HttpStatus.*
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.server.ResponseStatusException
 
 data class WireEntry(val name: String, val phoneNumber: String)
@@ -15,6 +16,7 @@ data class WireEntryUpdate(val oldPhoneNumber: String, val newName: String, val 
 data class WireSearch(val name: String)
 data class WireResponse(val status: Int, val message: String) 
 
+@CrossOrigin(origins = ["http://localhost:3000"])
 @RestController
 @RequestMapping("/api/addrbk")
 class Gateway(private val repository: EntryRepository) {

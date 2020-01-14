@@ -58,12 +58,12 @@ class InputDialog extends React.Component {
         }
 
         let data = {
-            phoneNumber: this.values.phoneNumber
+            name: this.values.phoneNumber
         }
 
         EntryDataService.retrieveEntry(data)
             .then(response => this.setState({
-                phoneNumber: response.data.phoneNumber
+                phoneNumber: response.data[0].phoneNumber
             }))
     }
 
@@ -84,18 +84,18 @@ class InputDialog extends React.Component {
 
     onSubmit = (values) => {
         if (!this.state.phoneNumber) {
-            let data = {
+            let data = [{
                 name: values.name,
                 phoneNumber: values.phoneNumber
-            }
+            }]
 
             Promise.resolve(EntryDataService.createEntry(data)).then(() => this.props.history.push('/'));
         } else {
-            let data = {
+            let data = [{
                 oldPhoneNumber: this.state.phoneNumber,
                 newName: values.name,
                 newPhoneNumber: values.phoneNumber
-            }
+            }]
 
             Promise.resolve(EntryDataService.updateEntry(data)).then(() => this.props.history.push('/'));
         }

@@ -42,9 +42,10 @@ class ListEntries extends Component {
     }
 
     deleteEntryClicked(phoneNumber) {
-        let data = {
+        let data = [{
+            name: "-",
             phoneNumber: phoneNumber
-        }
+        }]
 
         Promise.resolve(EntryDataService.deleteEntry(data))
             .then(
