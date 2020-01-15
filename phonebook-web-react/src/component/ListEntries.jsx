@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import 'bootstrap/dist/js/bootstrap.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import EntryDataService from '../service/EntryDataService';
@@ -31,6 +32,16 @@ class ListEntries extends Component {
         console.log(values);
     }
 
+    onSubmitSearch = (values) => {
+        console.log("############ Searching: " + values.searchText);
+        EntryDataService.searchEntry({ name: values.searchText })
+            .then(
+                response => {
+                    this.setState({ entries: response.data })
+                }
+            )
+    }
+
     refreshEntries() {
         EntryDataService.retrieveAllEntries()
             .then(
@@ -54,7 +65,6 @@ class ListEntries extends Component {
                     this.refreshEntries()
                 }
             )
-
     }
 
     addEntryClicked() {
@@ -71,12 +81,25 @@ class ListEntries extends Component {
         console.log('render')
         return (
             <div className="container">
-
-                <form class="form-inline active-cyan-4" onSubmit={this.onSubmit}> 
-                    <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search"
-                        aria-label="Search" />
-                    <i class="fas fa-search" aria-hidden="true"></i>
-                </form>
+                <Formik
+                  initialValues={{ searchText: ''}}
+                  onSubmit={this.onSubmitSearch}
+                  validateOnChange={false}
+                  validateOnBlur={false}
+                  enableReinitialize={false}
+                >
+                  {formik => (
+                    <form class="form-inline active-cyan-4" onSubmit={formik.handleSubmit}>
+                      <input id="searchText" {...formik.getFieldProps('searchText')} type="submit" class="form-control form-control-sm mr-3 w-75"
+                      type="text" placeholder="Search"
+ 		                                aria-label="Search" />
+                      <i class="fas fa-search" aria-hidden="true"></i>
+ 		     {formik.touched.searchText && formik.errors.searchText ? (
+                        <div>{formik.errors.searchText}</div>
+ 		     ) : null}
+                    </form>
+                  )}
+                </Formik>
 
                 <h3>All Phone Book Entries</h3>
 

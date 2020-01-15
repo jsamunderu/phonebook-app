@@ -64,7 +64,7 @@ class InputDialog extends React.Component {
             }))
     }
 
-    validate = (values) =>{
+    validate = (values) => {
         let errors = {}
         if (!values.name) {
             errors.name = 'Enter a Name'
