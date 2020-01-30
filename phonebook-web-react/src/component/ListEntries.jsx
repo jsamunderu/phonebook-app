@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import 'bootstrap/dist/js/bootstrap.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import EntryDataService from '../service/EntryDataService';
+import './pageStyle.css';
 
 class ListEntries extends Component {
     constructor(props) {
@@ -81,30 +82,38 @@ class ListEntries extends Component {
         console.log('render')
         return (
             <div className="container">
-                <Formik
-                  initialValues={{ searchText: ''}}
-                  onSubmit={this.onSubmitSearch}
-                  validateOnChange={false}
-                  validateOnBlur={false}
-                  enableReinitialize={false}
-                >
-                  {formik => (
-                    <form class="form-inline active-cyan-4" onSubmit={formik.handleSubmit}>
-                      <input id="searchText" {...formik.getFieldProps('searchText')} type="submit" class="form-control form-control-sm mr-3 w-75"
-                      type="text" placeholder="Search"
- 		                                aria-label="Search" />
-                      <i class="fas fa-search" aria-hidden="true"></i>
- 		     {formik.touched.searchText && formik.errors.searchText ? (
-                        <div>{formik.errors.searchText}</div>
- 		     ) : null}
-                    </form>
-                  )}
-                </Formik>
+                <div className="headingText">
+                    <h3>Phone Book Entries</h3>
+                </div>
+                <div className="searchBox">
+                    <Formik
+                      initialValues={{ searchText: ''}}
+                      onSubmit={this.onSubmitSearch}
+                      validateOnChange={false}
+                      validateOnBlur={false}
+                      enableReinitialize={false}
+                      >
+                      {formik => (
+                          <form class="form-inline active-cyan-4" onSubmit={formik.handleSubmit}>
+                              <input id="searchText" {...formik.getFieldProps('searchText')} type="submit" class="form-control form-control-sm mr-3 w-75"
+                                  type="text" placeholder="Search" aria-label="Search" />
+                              <i class="fas fa-search" aria-hidden="true"></i>
+                              {formik.touched.searchText && formik.errors.searchText ? (
+                                  <div>{formik.errors.searchText}</div>
+                              ) : null}
+                          </form>
+                      )}
+                    </Formik>
+                </div>
 
-                <h3>All Phone Book Entries</h3>
+		            <div className="mainHeader">
+                    <div className="headerEntry">
+                        <button className="btn btn-success" onClick={this.addEntryClicked}>Add</button>
+                    </div>
+		            </div>
 
                 {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
-                <div className="container">
+                <div className="entriesTable">
                     <table className="table">
                         <thead>
                             <tr>
@@ -128,9 +137,6 @@ class ListEntries extends Component {
                             }
                         </tbody>
                     </table>
-                    <div className="row">
-                        <button className="btn btn-success" onClick={this.addEntryClicked}>Add</button>
-                    </div>
                 </div>
             </div>
         )

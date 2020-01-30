@@ -9,7 +9,7 @@ const ModalWrapper = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.1);
 `;
 
 const ModalBody = styled.div`

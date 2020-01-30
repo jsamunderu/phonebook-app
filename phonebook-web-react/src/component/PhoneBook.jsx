@@ -10,16 +10,22 @@ class PhoneBook extends Component {
             showModal: true
         };
     }
- 
+
     getInitialState() {
         return { showModal: false };
     }
- 
+
     close = () => {
         this.setState({ showModal: false });
     }
- 
+
     open = () => {
+        console.log("open $$$$$$$$$$$$$$$$$$$$");
+        this.setState({ showModal: true });
+    }
+
+    initalise = () => {
+        console.log("initialise $$$$$$$$$$$$$$$$$$$$");
         this.setState({ showModal: true });
     }
 
@@ -27,17 +33,16 @@ class PhoneBook extends Component {
         return (
             <Router>
                 <>
-                    <h1>Phone Book</h1>
                     <Switch>
                         <Route path="/" exact component={ListEntries} />
-			<Route
+                          <Route
                             path="/entry" exact
-                            render={(props) => <InputDialog {...props} show={this.state.showModal} onHide={this.close} />}
-                        />
-			<Route
+                            render={(props) => <InputDialog {...props} init={this.initalise} show={this.state.showModal} onHide={this.close} />}
+                            />
+                          <Route
                             path="/entry/:phoneNumber"
-                            render={(props) => <InputDialog {...props} show={this.state.showModal} onHide={this.close} />}
-                        />
+                            render={(props) => <InputDialog {...props} init={this.initalise} show={this.state.showModal} onHide={this.close} />}
+                            />
                     </Switch>
                 </>
             </Router>

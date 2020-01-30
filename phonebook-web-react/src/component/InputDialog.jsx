@@ -8,15 +8,15 @@ const modalRoot = document.getElementById("modal-root");
 
 function Portal({ children }) {
     const [element] = useState(document.createElement("div"));
- 
+
     useEffect(() => {
         modalRoot.appendChild(element);
-       
+
         return function cleanup() {
             modalRoot.removeChild(element);
         };
     }, [modalRoot, element]);
- 
+
     return createPortal(children, element);
 }
 
@@ -40,10 +40,14 @@ function Modal({ children, toggle, open }) {
 class InputDialog extends React.Component {
     constructor(props) {
         super(props)
+
+        console.log("%%%%%%%%%%%%%%%%%%%%%%% " + this.props.show);
+
         this.state = {
              name: "",
              phoneNumber: this.props.match.params.phoneNumber
         }
+        this.props.init();
         console.log("===========" + JSON.stringify(this.props.match.params))
     }
 
@@ -76,7 +80,9 @@ class InputDialog extends React.Component {
     }
 
     onHide = () => {
-        Promise.resolve(this.props.onHide()).then(() => this.props.history.push('/'));
+        console.log("this.onHide #####################");
+        Promise.resolve(this.props.onHide())
+            .then(() => this.props.history.push('/'));
     }
 
     onSubmit = (values) => {
